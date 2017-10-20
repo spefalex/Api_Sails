@@ -1,0 +1,22 @@
+sails_container:
+ container_name: sails-content
+ ports:
+   - "1337:1337"
+ command: | 
+  bash -c "
+  npm install 
+  sails lift"
+ volumes:
+   - "./:/server"
+   - "./package.json:/server/package.json"
+   
+ build: .
+  
+ links:
+  - mongo:mongo
+
+mongo:
+  container_name: mongo-storage
+  image: mongo:latest
+  ports:
+    - "28018:27017"
